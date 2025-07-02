@@ -1,0 +1,382 @@
+/* Global Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body,
+html {
+  height: 100%;
+  font-family: 'Underdog', system-ui;
+  overflow-x: hidden;
+}
+
+/* Wrapper with Video Background */
+.app-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  color: #fff;
+}
+
+.background-video {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  z-index: -1;
+  opacity: 1;
+  transition: opacity 0.2s ease-in-out;
+}
+
+/* App Container */
+.App {
+  position: relative;
+  background: rgba(10, 10, 10, 0.6);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 40px 30px;
+  width: 100%;
+  max-width: 970px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
+  transition: transform 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+  z-index: 1;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.App:hover {
+  transform: scale(1.015);
+}
+
+/* 🔴 Distracted — Rotating red edge glow */
+.App.distracted::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border-radius: 22px;
+  padding: 2px;
+  background: conic-gradient(rgba(255, 0, 0, 0.7), transparent 90%);
+  animation: rotateEdgeGlow 2s linear infinite;
+  z-index: -1;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  -webkit-mask-composite: destination-out;
+  filter: blur(2px);
+}
+
+/* ✅ Safe — Green pulsing border */
+.App.safe::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border-radius: 22px;
+  background: rgba(0, 255, 0, 0.4);
+  animation: pulseGreen 2s ease-in-out infinite;
+  z-index: -1;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  -webkit-mask-composite: destination-out;
+  filter: blur(8px);
+}
+
+@keyframes rotateEdgeGlow {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulseGreen {
+  0% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+  100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+}
+
+/* Header */
+.header {
+  text-align: center;
+  margin-bottom: 30px;
+  user-select: none;
+}
+
+.title {
+  font-family: "Underdog", system-ui;
+  font-weight: 400;
+  font-size: 3rem;
+  font-style: normal;
+  letter-spacing: 1.2px;
+  color: #FFFFFF;
+  text-shadow:
+    0 0 2px #FFFFFF,
+    0 0 5px #EEEEEE,
+    0 0 10px #DDDDDD,
+    0 0 15px #CCCCCC;
+  animation: glowWhite 3s ease-in-out infinite alternate;
+  position: relative;
+  margin-bottom: 12px;
+  padding-bottom: 6px;
+  text-align: center;
+  margin-top: 60px;
+}
+
+@keyframes glowWhite {
+  from 
+  {
+    text-shadow:
+      0 0 3px #FFFFFF,
+      0 0 6px #EEEEEE,
+      0 0 1px #DDDDDD;
+  }
+  to 
+  {
+    text-shadow:
+      0 0 4px #FFFFFF,
+      0 0 10px #EEEEEE,
+      0 0 10px #CCCCCC;
+  }
+}
+
+.title::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 60px;
+  height: 4px;
+  background: #34af42;
+  border-radius: 2px;
+}
+
+.subtitle {
+  color: #ddd;
+  font-size: 1.1rem;
+  margin-top: 10px;
+}
+
+/* Input Section */
+.input-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+  gap: 10px;
+  width: 100%;
+}
+
+.upload-input {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background-color: rgba(99, 93, 93, 0.2);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  font-size: 1rem;
+  color: #e9dada;
+  transition: border-color 0.3s ease;
+}
+
+.upload-input.success {
+  border: 2px solid #4caf50;
+}
+
+.upload-input.error {
+  border: 2px solid #f44336;
+}
+
+.upload-input:focus {
+  outline: none;
+  border-color: #ff6f61;
+  box-shadow: 0 0 5px #ff6f61;
+}
+
+/* Loader */
+.loader {
+  margin: 20px auto;
+  border: 5px solid #ccc;
+  border-top: 5px solid #ff6f61;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Image Preview */
+.preview-section {
+  margin-top: 20px;
+  text-align: center;
+  width: 100%;
+}
+
+.preview-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #aaccb7;
+  font-family: 'Underdog', system-ui;
+}
+
+.image-preview {
+  max-width: 100%;
+  max-height: 300px;
+  border-radius: 12px;
+  user-select: none;
+  transition: all 0.3s ease-in-out;
+}
+
+/* 🔴 Distracted image border effect */
+.image-preview.distracted-border {
+  border: 2px solid rgba(255, 0, 0, 0.7);
+  box-shadow:
+    0 0 10px 3px rgba(255, 0, 0, 0.7),
+    0 0 20px 6px rgba(255, 0, 0, 0.4),
+    0 6px 18px rgba(0, 0, 0, 0.5);
+  animation: pulseRed 2s ease-in-out infinite;
+}
+
+/* Subtler red pulse animation */
+@keyframes pulseRed {
+  0% {
+    box-shadow:
+      0 0 5px 1px rgba(255, 0, 0, 0.3),
+      0 0 10px 2px rgba(255, 0, 0, 0.2);
+  }
+  50% {
+    box-shadow:
+      0 0 8px 2px rgba(255, 0, 0, 0.5),
+      0 0 16px 4px rgba(255, 0, 0, 0.3);
+  }
+  100% {
+    box-shadow:
+      0 0 5px 1px rgba(255, 0, 0, 0.3),
+      0 0 10px 2px rgba(255, 0, 0, 0.2);
+  }
+}
+
+/* ✅ Safe image border effect */
+.image-preview.safe-border {
+  border: 2px solid rgba(0, 255, 0, 0.5);
+  box-shadow:
+    0 0 10px 3px rgba(0, 255, 0, 0.6),
+    0 0 20px 6px rgba(0, 255, 0, 0.3),
+    0 6px 18px rgba(0, 0, 0, 0.4);
+  animation: pulseGreen ;
+}
+
+
+/* Result Card */
+.result-card {
+  padding: 20px;
+  border-radius: 12px;
+  margin-top: 20px;
+  text-align: center;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+  width: 100%;
+}
+
+.safe {
+  background: rgba(200, 230, 201, 0.3);
+  color: #1bf526;
+  border-radius: 12px;
+  box-shadow:
+    0 0 10px 3px rgba(76, 175, 80, 0.6),
+    inset 0 0 10px rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(76, 175, 80, 0.7);
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.distracted {
+  background: rgba(255, 235, 238, 0.3);
+  color: #ec5252;
+  border-radius: 12px;
+  box-shadow:
+    0 0 10px 3px rgba(244, 67, 54, 0.6),
+    inset 0 0 10px rgba(121, 63, 63, 0.1);
+  border: 1px solid rgba(244, 67, 54, 0.7);
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.result-card h2 {
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+  font-weight: 700;
+}
+
+.result-card p {
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+}
+
+.result-card strong {
+  font-weight: bold;
+}
+
+/* Error Message */
+.error-message {
+  font-size: 1rem;
+  margin-top: 10px;
+  color: #f44336;
+  text-align: center;
+  user-select: none;
+}
+
+/* Footer */
+.footer {
+  margin-top: 40px;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #bbb;
+  user-select: none;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .App {
+    padding: 20px;
+  }
+
+  .input-section {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .upload-input {
+    width: 100%;
+  }
+}
